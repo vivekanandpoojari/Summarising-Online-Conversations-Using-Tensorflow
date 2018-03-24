@@ -7,6 +7,7 @@ from nltk.corpus import nps_chat
 from time import time,sleep
 from collections import Counter
 
+alo =6
 d = {}
 posans= []
 negans = []
@@ -22,7 +23,7 @@ def abstruct(value):
 	global ans, d, posant, negans
 	flag = userasked= 0
 	tempvalue=""
-	file = open("Output.txt", "w+")
+	file = open(str(alo)+"_ouptput.txt", "w+")
 	for f in line:
 		#print("flag: ", flag)
 		a = f.split(':')
@@ -85,23 +86,21 @@ train_set, test_set = featuresets[size:], featuresets[:size]
 #print("-----------")
 #print(test_set)
 classifier = nltk.NaiveBayesClassifier.train(train_set)
-
+'''
 print('Welecome to TATA Docomo ' + classifier.classify(dialogue_act_features('Welcome to TATA Docomo')))
 print('Is your lan cable connected ? ' + classifier.classify(dialogue_act_features('Is your lan cable connected ?')))
-print('Yes ' + classifier.classify(dialogue_act_features('Yes')))
+print('Yes ,' + classifier.classify(dialogue_act_features('Yes')))
 print('What is the ETA for this fix ? ' + classifier.classify(dialogue_act_features('What is the ETA for this fix ?')))
 print('It is expected to be fixed by Friday ' + classifier.classify(dialogue_act_features('It is expected to be fixed by Friday')))
 print('I am happy with this service ' + classifier.classify(dialogue_act_features('I am happy with this service')))
 print('This service is very poor ' + classifier.classify(dialogue_act_features('This service is very poort')))
 print('No i ehhh ' + classifier.classify(dialogue_act_features('No')))
-print('Okay, ' + classifier.classify(dialogue_act_features('ohhh  zzzz hmmm ')))
+print('I am Sarnava?, ' + classifier.classify(dialogue_act_features('okay what is the number? ')))
 
 '''
-
-foo= open("input.txt", "r")
+foo= open(str(alo)+".txt", "r")
 line = foo.readlines()
 
 abstruct(line)
 foo.close()
 print(ans)
-'''

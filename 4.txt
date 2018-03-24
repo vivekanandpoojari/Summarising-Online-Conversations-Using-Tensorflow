@@ -1,0 +1,12 @@
+U: I want to discontinue the service.
+A: Welcome to Airtel.
+A: How can I help you ?
+A: Please tell me your registered no.
+U: 7411285719
+A: can you let us know the reason so that I can help you.
+U: The network connection is poor.
+A: I can raise a ticket for your technical team to look into
+U: That won't be needed I want to discontinue.
+A: I will rise a request for the same.
+A: It will require 7 working days.
+U: ok, Thank you.

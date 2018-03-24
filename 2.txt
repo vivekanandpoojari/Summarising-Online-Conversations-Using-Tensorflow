@@ -1,0 +1,11 @@
+A: Welcome to Airtel.
+A: How can I help you ?
+U: My mobile data is down.
+A: Do u have a postpaid or prepaid connection ?
+U: Prepaid.
+A: Have you recharged.
+U: I do not remember can you check ?
+A: Please give me a minute.
+A: Thank you for waiting
+A: Your internet balance is low, Kindly recharge to enjoy the internet.
+U: Thank you.
