@@ -6,18 +6,27 @@ from nltk import word_tokenize, pos_tag
 from nltk.corpus import nps_chat
 from time import time,sleep
 from collections import Counter
-
-alo =6
+typeofdialogue =[]
+alo =0
 d = {}
 posans= []
 negans = []
 
+removeword = ["Thank you", "Thanks", "Welcome","Please"]
+
+C_repls = ('I ', 'Customer '), ('my ', 'Customers '), ('me ','Customers '), ('mine ','Customers ')
+A_repls = ('I ', 'Agent '), ('my ', 'Agent '), ('me ','Agent '), ('mine ','Agent ')
 d["Is the Lan connected ?"]= 0
 posans.append("The Lan Is connected.")
 negans.append("The Lan is not connected.")
 
 ans = ""
-posts = nps_chat.xml_posts()[:10000]
+
+print('yede')
+l=[]
+l= nps_chat.xml_posts()[:]
+print (len(l))
+posts = nps_chat.xml_posts()[:]
 
 def abstruct(value):
 	global ans, d, posant, negans
@@ -27,10 +36,20 @@ def abstruct(value):
 	for f in line:
 		#print("flag: ", flag)
 		a = f.split(':')
+		print (type(a[1]))
+		for remv in removeword:
+			if remv in a[1]:
+				a[1].replace(remv, "")
+		
 		temp = a[-1].strip()
 		dac = classifier.classify(dialogue_act_features(temp))
-		#print (a,dac)
+		if dac not in typeofdialogue:
+			typeofdialogue.append(dac)
+		print (a,dac)
 		
+        
+        ## Reject
+        ## Clarify
 		if userasked ==1:
 			ans += temp
 			file.write(temp+"\n");
@@ -40,8 +59,7 @@ def abstruct(value):
 			continue
 		elif dac == "Statement" or dac == "Emphasis":
 			ans += temp
-			file.write(temp+"\n"); 
-			
+			file.write(temp +"\n");
 		elif dac == "ynQuestion" or dac == "whQuestion":
 			if a[0] == 'U':
 				ans += temp
@@ -98,9 +116,14 @@ print('No i ehhh ' + classifier.classify(dialogue_act_features('No')))
 print('I am Sarnava?, ' + classifier.classify(dialogue_act_features('okay what is the number? ')))
 
 '''
-foo= open(str(alo)+".txt", "r")
-line = foo.readlines()
+for fileno in range(1,7):
+    alo =fileno
+    ans =""
+    print(fileno)
+    foo= open(str(alo)+".txt", "r")
+    line = foo.readlines()
 
-abstruct(line)
-foo.close()
-print(ans)
+    abstruct(line)
+    foo.close()
+    print(ans)
+#print(typeofdialogue)

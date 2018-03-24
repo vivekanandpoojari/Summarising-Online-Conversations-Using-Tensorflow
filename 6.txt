@@ -1,12 +1,12 @@
 A: Hi, Pizzahut, 
 A: What would you like to order.
-U: I want a large non veg cheese burst pizza with extra chicken in toppings. 
-A: Please tell me your registered mobile no.
+U: I want a large non-veg cheese burst pizza with extra chicken in toppings. 
+A: Whats is your registered mobile number
 U: 7411285719
 A: Welcome, Sarnava.
 U: yes, Thank you.
 A: You can add a Diet Coke of Rs 50 for Rs 25. 
-A: Would you like to add Diet Coke.
+A: Do you want to add Diet Coke
 A: Yes, Please.
 U: Is there anything you to add.
 A: Yes, add 2 garlic breads.

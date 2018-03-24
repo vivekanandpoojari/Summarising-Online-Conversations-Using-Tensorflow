@@ -1,7 +1,7 @@
 A: Welcome to Airtel.
 A: How can I help you ?
 U: My mobile data is down.
-A: Do u have a postpaid or prepaid connection ?
+A: What is your connection type.
 U: Prepaid.
 A: Have you recharged.
 U: I do not remember can you check ?

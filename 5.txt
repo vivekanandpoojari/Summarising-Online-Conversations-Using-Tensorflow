@@ -7,7 +7,7 @@ A: Currently your base pack is of Rs 300.
 U: What are the other options
 A: You can have have pack of Rs 700 with 300 mins of std call and unlimited local calls. 
 A: You can have have pack of Rs 900 with 600 mins of std call and unlimited local calls and sms 
-A: Which one will you prefer?
+A: Which one will you prefer.
 U: I would like to change it to Rs 700.
 A: Let me raise a request for the same
 A: I have raised a ticket and Your ticket no is AIR13456.
