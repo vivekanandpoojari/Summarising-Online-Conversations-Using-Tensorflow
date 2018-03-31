@@ -1,0 +1,24 @@
+<template>
+	<KeyValuePairs>
+		<KeyValuePair>	
+			<keywords>lan,cable,connected</keywords>
+			<key>Lan Connection Status</key>
+		</KeyValuePair>
+		<KeyValuePair>
+			<keywords>modem,blinking</keywords>
+			<key>Current balance</key>
+		</KeyValuePair>
+		<KeyValuePair>
+			<keywords>browse,google</keywords>
+			<key>Internet Status</key>
+		</KeyValuePair>
+		<KeyValuePair>
+			<keywords>ticket</keywords>
+			<key>Ticket ID</key>
+		</KeyValuePair>
+		<KeyValuePair>
+			<keywords>ETA,timeline</keywords>
+			<key>Estimated Date for fix</key>
+		</KeyValuePair>
+	</KeyValuePairs>
+</template>
