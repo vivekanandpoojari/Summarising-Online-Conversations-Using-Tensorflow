@@ -1,0 +1,9 @@
+Service required : Modem working status
+LAN Connection Status : Yes
+Modem working status : Yes
+LAN Connection Status : Yes
+Is the Internet light green ?
+Ticket ID
+Ticket ID
+Ticket ID
+Ticket ID : Ticket ID
