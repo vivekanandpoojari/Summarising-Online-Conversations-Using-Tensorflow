@@ -60,6 +60,12 @@ print(featuresets)
 size = int(len(featuresets) * 0.1)
 train_set, test_set = featuresets[size:], featuresets[:size]
 classifier = nltk.NaiveBayesClassifier.train(train_set)
-testsentence = 'is your modem light blinking '
-classifier.classify(dialogue_act_features(testsentence))
+testsentence = 'thank you'
+print(classifier.classify(dialogue_act_features(testsentence)))
+
+print("Probability :------------------")
+dist = classifier.prob_classify(dialogue_act_features(testsentence))
+for label in dist.samples():
+    print("%s: %f" % (label, dist.prob(label)))
+
 
