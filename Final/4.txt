@@ -1,6 +1,6 @@
 U: I want to discontinue the service.
 A: Welcome to Airtel.
-A: How can I help you ?
+A: How can I help you
 A: What is your registered number
 U: 7411285719
 A: What is the reason of discontinuing the service.

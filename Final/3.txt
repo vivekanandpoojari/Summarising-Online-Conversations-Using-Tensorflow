@@ -1,7 +1,7 @@
-U: I haven't received my e-bill for this month
 A: Welcome to Airtel.
 A: How can I help you.
-A: Please tell me your registered no.
+U: I haven't received my e-bill for this month
+A: Please tell me your registered number.
 U: 7411285719
 A: What is your your email address
 U: sarnavamukherjee20@gmail.com

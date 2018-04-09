@@ -8,6 +8,7 @@ from nltk.corpus import nps_chat
 from time import time,sleep
 from rake_nltk import Rake
 from collections import Counter
+from nltk.tag.stanford import CoreNLPNERTagger
 
 
 ####### Global Variable ########################
@@ -17,14 +18,30 @@ classifier_statement = classifier_template = 0
 posts = nps_chat.xml_posts()[:]
 r = Rake()
 keyWordsPerInputSentence =[]
+nerTagger = CoreNLPNERTagger(url='http://localhost:9000')
 
 inputTrainingCorpus = {'LAN Connection Status':['is your lan cable connected'], 
-                         'Modem working status':['is your wifi modem light blinking?'], 
+                         'Modem working status':['is your modem modem light blinking?'],
+                         'Modem working status':['Is your modem on?'],
+                         'Wifi working status':['wifi is not working'],
+                         'LAN connection status':['Is the Lan Connected'],
                          'Internet working status':['can you browse google?'],
+                         'Internet working status':['Is the internet light on'],
                          'Ticket ID': ['your ticket id is'],
                          'Estimated Date for fix':['the eta for this problem is'],
                          'Order Location':['where is my order'],
-                         'Service required':['How can I help you']
+                         'Service required':['How may I help you'],
+                         'Service required':['Is there anything I can help you with'],
+                         'Modem working status':['Is your modem on?'],
+                         'Mobile Data status':['Mobile data turned of'],
+                         'Recharge status':['Have you recharged'],
+                         'Connection Status':['What is the type of connection'],
+                         'Connection Status':['Prepaid or Postpaid'],
+                         'Phone number':['what is the registered number']
+                         #'e-Bill status':['where is my e-bill'],
+                         #'e-Bill status':['e-bill not generated'],
+                         
+                         
                          }
 
 ######################################################
@@ -65,11 +82,12 @@ def train_template():
 def abstruct(allTheLines):
     
     outputFileHandler = open(str(outputFilenNo)+"_ouptput.txt", "w+")
+    lastSpeaker = lastStatementType = lastLine = ""
     
     for eachLine in allTheLines:
         
-        statement = eachLine.split(':')
-        statement = statement[-1].strip()
+        statementlist = eachLine.split(':')
+        statement = statementlist[-1].strip()
         
         classifiedType = classifier_statement.classify(dialogue_act_features(statement))
         print(statement)
@@ -81,12 +99,24 @@ def abstruct(allTheLines):
             continue
         elif classifiedType == "Greet" or classifiedType == "System":
             continue
-        elif classifiedType == "ynQuestion" or classifiedType == 'whQuestion':
+        elif classifiedType == "ynQuestion" or classifiedType == 'whQuestion' or classifiedType == 'Clarify':
             classified_statement = classifier_template.classify(dialogue_act_features(statement))
-            outputFileHandler.write(classified_statement+" : ")
+            outputFileHandler.write(classified_statement+" : ")          
         elif classifiedType == 'Statement':
-            classified_statement = classifier_template.classify(dialogue_act_features(statement))
-            outputFileHandler.write(classified_statement+"\n")
+             if lastStatementType == 'whQuestion' or lastStatementType == 'Clarify':
+                  #NER and paste
+                  entities = nerTagger.tag(statement.split())
+                  bFoundMatchingEntity = False
+                  for entity in entities:
+                       if entity[1] == 'CITY' or entity[1] == 'DURATION' or entity[1] == 'NUMBER':
+                            outputFileHandler.write(entity[0] + " ")
+                            bFoundMatchingEntity = True
+                  if not bFoundMatchingEntity:
+                       outputFileHandler.write(statement)
+                  outputFileHandler.write("\n")                      
+             else:
+                  classified_statement = classifier_template.classify(dialogue_act_features(statement))
+                  outputFileHandler.write(classified_statement+"\n")
         elif classifiedType == 'yAnswer':
             outputFileHandler.write('Yes'+"\n")
         elif classifiedType == 'nAnswer':
@@ -94,6 +124,9 @@ def abstruct(allTheLines):
         else:
             outputFileHandler.write(statement+"\n")
             
+        lastSpeaker = statementlist[0]
+        lastStatementType = classifiedType
+        lastLine = statementlist[-1]
         
 
 ######################################################

@@ -1,16 +1,15 @@
 A: Welcome to Tata Docomo
 U: Hi,
-A: How can I help you ?
+A: How can I help you
 U: My wifi is not working.
-A: Is the Lan connected ?
+A: Do you have Lan connected
 U: Yes, It is.
-A: Did you restart the modem ?
+A: Did you restart the modem
 U: Yes,
-A: Is the Lan connected ?
-U: yes
-A: Is the Internet light green ?
+A: Is the internet light green 
 U: Its red.
-A: I will raise a ticket for hardware malfunction.
-U: ok
-A: your ticket number in TATA12345
-U: thank you
+A: Do you want me to raise a ticket ?
+U: Yes
+U: what is my ticket id
+A: I have raised a ticket for hardware malfunction and your ticket number in 12345
+U: Thanks

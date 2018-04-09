@@ -1,0 +1,7 @@
+Service required
+Mobile Data status
+Connection Status : Connection Status
+Recharge status : Not in the last 2 weeks.
+Wifi working status : Thank you for waiting
+No
+Wifi working status
