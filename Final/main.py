@@ -9,6 +9,7 @@ from time import time,sleep
 from rake_nltk import Rake
 from collections import Counter
 from nltk.tag.stanford import CoreNLPNERTagger
+from tkinter import *
 
 
 ####### Global Variable ########################
@@ -27,8 +28,10 @@ inputTrainingCorpus = {'LAN Connection Status':['is your lan cable connected'],
                          'LAN connection status':['Is the Lan Connected'],
                          'Internet working status':['can you browse google?'],
                          'Internet working status':['Is the internet light on'],
-                         'Ticket ID': ['your ticket id is'],
+                         'Ticket ID':['Do you want to raise a ticket'],
+                         'Ticket ID':['What is the ticket id'],
                          'Estimated Date for fix':['the eta for this problem is'],
+                         'Estimated Date for fix':['what is the estimated time'],
                          'Order Location':['where is my order'],
                          'Service required':['How may I help you'],
                          'Service required':['Is there anything I can help you with'],
@@ -39,9 +42,14 @@ inputTrainingCorpus = {'LAN Connection Status':['is your lan cable connected'],
                          'Recharge status':['What is my last recharge'],
                          'Phone number':['what is the registered number'],
                          'Connection Status':['What is the connection type'],
-                         'Email Id':['What is your registered email id']
-                       
-                     }
+                         'Email Id':['What is your registered email id'],
+                         'Email Id':['What is your mail id' ],
+                         'Service Termination':['I want to stop the service'],
+                         'Service Termination':['I want to discontinue'],
+                         'Service Termination':['stop the service'],
+                         'e-bill Status':['Do you want an ebill'],
+                         'e-bill Status':['your ebill has been send']
+                       }
 
 ######################################################
 
@@ -57,7 +65,7 @@ def dialogue_act_features(post):
 def train_npschat():
     global classifier_statement
     featuresets = [(dialogue_act_features(post.text), post.get('class'))for post in posts] 
-    size = int(len(featuresets) * 0.1)
+    size = int(len(featuresets) * 0.9)
     train_set, test_set = featuresets[size:], featuresets[:size]
     classifier_statement = nltk.NaiveBayesClassifier.train(train_set)
 
@@ -89,6 +97,8 @@ def abstruct(allTheLines):
         statement = statementlist[-1].strip()
         
         classifiedType = classifier_statement.classify(dialogue_act_features(statement))
+        
+        
         print(statement)
         print(classifiedType)
         if classifiedType not in typeofdialogue:
@@ -134,8 +144,29 @@ def abstruct(allTheLines):
         
 
 ######################################################
-    
-            
+
+def printOutputFile():
+     
+     root = Tk()
+     
+     printFileHandler = open(str(outputFilenNo)+"_ouptput.txt", "r")
+     
+     lines = printFileHandler.readlines()
+     heightOfBox = len(lines) + 20
+     T = Text(root, height=heightOfBox, width=100)
+     T.pack()
+     
+     for line in lines:
+          T.insert(END, line)
+          T.insert(END, "\n")
+     b2 = Button(root, text='Quit', command=root.quit)
+     b2.pack(side=RIGHT, padx=15, pady=15)
+     mainloop()
+     
+     
+
+######################################################
+                
 def main():
     global outputFilenNo
     
@@ -153,8 +184,7 @@ def main():
         lines = inputFileHandler.readlines()
         abstruct(lines)
         inputFileHandler.close()
-        
-        print(ans)
+        printOutputFile()
         
 ##############################################################        
 if __name__ == "__main__": main()

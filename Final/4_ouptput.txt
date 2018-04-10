@@ -1,8 +1,5 @@
-Wifi working status
-Wifi working status : Service required
-Phone number : Wifi working status
-Wifi working status : Connection Status
-No
-That won't be needed I want to discontinue.
-Wifi working status
-It will require 7 working days.
+e-bill Status : Service required : I want to discontinue the service
+Phone number : What is the reason of discontinuing the service.
+Connection Status : Ticket ID : That won't be needed I want to discontinue.
+Ticket ID : 757667 
+Estimated Date for fix : Wifi working status : Thank you

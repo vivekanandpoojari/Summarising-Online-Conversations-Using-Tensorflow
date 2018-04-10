@@ -9,9 +9,9 @@ The default port picked by server is 9000
 '''
 
 nerTagger = CoreNLPNERTagger(url='http://localhost:9000')
-inputText = 'Your order  has been shipped from Mumbai and will reach Pune in 3 days'
+inputText = 'Your email id is vpoojaridooj@avaya.com'
 entities = nerTagger.tag(inputText.split())
-
+print(entities)
 for entity in entities:
 	if entity[1] == 'CITY':
 		print('The city is : ' + entity[0])
