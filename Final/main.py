@@ -34,15 +34,14 @@ inputTrainingCorpus = {'LAN Connection Status':['is your lan cable connected'],
                          'Service required':['Is there anything I can help you with'],
                          'Modem working status':['Is your modem on?'],
                          'Mobile Data status':['Mobile data turned of'],
-                         'Recharge status':['Have you recharged'],
-                         'Connection Status':['What is the type of connection'],
-                         'Connection Status':['Prepaid or Postpaid'],
-                         'Phone number':['what is the registered number']
-                         #'e-Bill status':['where is my e-bill'],
-                         #'e-Bill status':['e-bill not generated'],
-                         
-                         
-                         }
+                         'Recharge status':['When did you last recharge'],
+                         'Recharge status':['Did you recharge'],
+                         'Recharge status':['What is my last recharge'],
+                         'Phone number':['what is the registered number'],
+                         'Connection Status':['What is the connection type'],
+                         'Email Id':['What is your registered email id']
+                       
+                     }
 
 ######################################################
 
@@ -116,10 +115,15 @@ def abstruct(allTheLines):
                   outputFileHandler.write("\n")                      
              else:
                   classified_statement = classifier_template.classify(dialogue_act_features(statement))
-                  outputFileHandler.write(classified_statement+"\n")
-        elif classifiedType == 'yAnswer':
+                  #outputFileHandler.write(classified_statement+"\n")
+                  classified_statementProb = classifier_template.prob_classify(dialogue_act_features(statement))
+                  if (classified_statementProb.prob(list(classified_statementProb.samples())[0]) * len(classified_statementProb.samples())) == 1:
+                      outputFileHandler.write(statement+"\n")
+                  else:
+                      outputFileHandler.write(classified_statement+"\n")
+        elif classifiedType == 'yAnswer' and lastStatementType == 'ynQuestion':
             outputFileHandler.write('Yes'+"\n")
-        elif classifiedType == 'nAnswer':
+        elif classifiedType == 'nAnswer' and lastStatementType == 'ynQuestion':
             outputFileHandler.write('No'+"\n")
         else:
             outputFileHandler.write(statement+"\n")
@@ -138,7 +142,7 @@ def main():
     train_npschat()
     train_template()
     
-    for fileno in range(1,2):
+    for fileno in range(4,5):
         
         outputFilenNo = fileno
         ans = ""

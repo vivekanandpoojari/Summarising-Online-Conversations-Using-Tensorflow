@@ -1,7 +1,9 @@
-Wifi working status : Service required : I haven't received my e-bill for this month
-Phone number : Wifi working status
-Wifi working status : Wifi working status : Thank you for waiting
-No
-Wifi working status : Estimated Date for fix : No
-Ticket ID : Wifi working status
-Service required : 
+Service required
+I haven't received my e-bill for this month
+Phone number : 7411285719 
+Please give me a minute
+The e bill generated on 7th of the current month was send to your account.
+Wifi working status
+Estimated Date for fix : I will raise a ticket and our technical team will look into it.
+Ticket ID : 13456 
+Service required : No

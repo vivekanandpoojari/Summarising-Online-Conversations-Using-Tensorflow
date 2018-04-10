@@ -1,7 +1,6 @@
 Service required
 Mobile Data status
-Connection Status : Connection Status
+Connection Status : I have prepaid.
 Recharge status : Not in the last 2 weeks.
-Wifi working status : Thank you for waiting
-No
-Wifi working status
+Please wait for a while
+Your internet balance is low, Kindly recharge to enjoy the internet.

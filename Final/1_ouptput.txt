@@ -1,7 +1,7 @@
 Service required
 Wifi working status
 LAN connection status : Yes
-Modem working status : Yes
+Modem working status : Yes,
 Internet working status : Its red.
 Ticket ID : Yes
 Ticket ID : 12345 
