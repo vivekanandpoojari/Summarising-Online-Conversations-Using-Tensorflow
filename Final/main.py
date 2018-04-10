@@ -173,7 +173,7 @@ def main():
     train_npschat()
     train_template()
     
-    for fileno in range(4,5):
+    for fileno in range(1,5):
         
         outputFilenNo = fileno
         ans = ""
