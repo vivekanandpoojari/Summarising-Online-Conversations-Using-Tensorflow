@@ -1,7 +1,6 @@
-Service required
-Wifi working status
-LAN connection status : Yes
+Service required : My wifi is not working.
+LAN connection status : No
 Modem working status : Yes,
 Internet working status : Its red.
-Ticket ID : Yes
+Ticket ID : Yes, raise a ticket
 Ticket ID : 12345 

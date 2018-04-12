@@ -1,4 +1,3 @@
-A: Welcome to Airtel
 A: How can I help you
 U: I want to discontinue the service
 A: What is your registered number

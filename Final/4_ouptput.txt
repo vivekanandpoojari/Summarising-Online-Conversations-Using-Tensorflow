@@ -1,5 +1,7 @@
-e-bill Status : Service required : I want to discontinue the service
+Service required : I want to discontinue the service
 Phone number : What is the reason of discontinuing the service.
-Connection Status : Ticket ID : That won't be needed I want to discontinue.
+Connection Status : Can I raise a ticket for your technical team to look into
+That won't be needed I want to discontinue.
 Ticket ID : 757667 
-Estimated Date for fix : Wifi working status : Thank you
+Estimated Date for fix : 7 days 
+Thank you

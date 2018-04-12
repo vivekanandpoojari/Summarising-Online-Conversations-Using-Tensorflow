@@ -1,4 +1,3 @@
-A: Welcome to Airtel
 A: How can I help you
 U: I haven't received my e-bill for this month
 A: What is your registered number

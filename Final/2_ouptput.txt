@@ -1,6 +1,5 @@
-Service required
-Mobile Data status
+Service required : My mobile data is down.
 Connection Status : I have prepaid.
 Recharge status : Not in the last 2 weeks.
-Please wait for a while
-Your internet balance is low, Kindly recharge to enjoy the internet.
+Your internet balance is low,
+Recharge status : 

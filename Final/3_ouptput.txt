@@ -1,9 +1,8 @@
-Service required
-I haven't received my e-bill for this month
-Phone number : 7411285719 
-Please give me a minute
+Service required : I haven't received my e-bill for this month
+What is your registered number
+a minute 
 The e bill generated on 7th of the current month was send to your account.
-Wifi working status
-Estimated Date for fix : I will raise a ticket and our technical team will look into it.
+I did not receive it
+e-bill Status : I will raise a ticket and our technical team will look into it.
 Ticket ID : 13456 
-Service required : No
+Service required : No, nothing
