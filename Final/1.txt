@@ -1,15 +1,15 @@
 A: Hello
 U: Hi,
-A: How can I help you
+A: How can I help you ?
 U: My wifi is not working.
-A: Do you have Lan connected
-U: Yes, It is.
-A: Did you restart the modem
-U: Yes,
-A: Is the internet light green 
-U: Its red.
+A: Is the modem green light blinking ? 
+U: Yes it is green.
+A: Did you restart the modem ?
+U: Yes
+A: Could you please check if the modem lan cable is connected ?
+U: Yes it is connected
+A: This looks like a problem at our end , I will need to raise a ticket with the backend team.
 A: Do you want me to raise a ticket ?
-U: Yes, raise a ticket
-U: what is my ticket id
+U: Yes, please raise a ticket
 A: I have raised a ticket for hardware malfunction and your ticket number in 12345
-U: Thanks
+U: Thank
