@@ -1,0 +1,7 @@
+Service Required : My wifi is not working.
+Modem working status : Yes
+Modem restarted : Yes
+LAN Connection Status : Yes
+Ticket ID : Yes
+Notes : I have raised a ticket for hardware malfunction and your ticket number in 12345
+NUMBER : 12345

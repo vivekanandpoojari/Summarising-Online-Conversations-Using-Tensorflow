@@ -12,4 +12,4 @@ A: This looks like a problem at our end , I will need to raise a ticket with the
 A: Do you want me to raise a ticket ?
 U: Yes, please raise a ticket
 A: I have raised a ticket for hardware malfunction and your ticket number in 12345
-U: Thank
+U: Thanks

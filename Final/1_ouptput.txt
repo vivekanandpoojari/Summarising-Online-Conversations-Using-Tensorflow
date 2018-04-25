@@ -1,7 +1,0 @@
-Service required : My wifi is not working.
-Modem working status : Yes it is green.
-Modem restarted  : Yes
-LAN connection status : Yes it is connected
-Notes : This looks like a problem at our end , I will need to raise a ticket with the backend team.
-Ticket ID : Yes, please raise a ticket
-Notes : I have raised a ticket for hardware malfunction and your ticket number in 12345

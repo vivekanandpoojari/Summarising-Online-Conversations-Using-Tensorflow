@@ -44,6 +44,12 @@ def dialogue_act_features(inputTrainingSentence):
         features['contains({})'.format(word.lower())] = True
     return features
 
+def dialogue_act_features2(inputTrainingSentence):
+    features = {}
+    for word in nltk.word_tokenize(inputTrainingSentence):
+        features['{}'.format(word.lower())] = True
+    return features
+
 
 # In[108]:
 
