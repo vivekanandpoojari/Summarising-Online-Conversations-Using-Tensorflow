@@ -19,8 +19,8 @@ import pickle
 outputFilenNo = 0
 typeofdialogue =[]
 classifier_statement = classifier_template = 0
-RHSClassifierModelName = 'rhsClassifierModel.sav'
-NPSDialogActClassifierModelName = 'NPSDialogActClassifierModel.sav'
+RHSClassifierModelName = '/Users/Sarnava/Data/hackathon/Hackathon_2018/rhsClassifierModel.sav'
+NPSDialogActClassifierModelName = '/Users/Sarnava/Data/hackathon/Hackathon_2018/NPSDialogActClassifierModel.sav'
 posts = nps_chat.xml_posts()[:]
 r = Rake()
 nerTagger = CoreNLPNERTagger(url='http://localhost:9000')
@@ -190,7 +190,7 @@ def main():
     global classifier_statement
     global classifier_template
 
-    fileno = "transcript"
+    fileno = "/Users/Sarnava/Data/hackathon/Hackathon_2018/transcript"
 
     mode = 'eval'    
     
