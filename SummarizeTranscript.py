@@ -190,6 +190,8 @@ def main():
     global classifier_statement
     global classifier_template
 
+    fileno = "transcript"
+
     mode = 'eval'    
     
     if mode == 'train':
@@ -202,15 +204,13 @@ def main():
             classifier_statement = pickle.load(g)
     
     filesToProcess = [1]
-
-    for fileno in filesToProcess:
-        outputFilenNo = fileno
-        ans = ""
-        inputFileHandler = open(str(fileno)+".txt", "r")
-        lines = inputFileHandler.readlines()
-        abstruct(lines)
-        inputFileHandler.close()
-        printOutputFile()
+    outputFilenNo = fileno
+    ans = ""
+    inputFileHandler = open(str(fileno)+".txt", "r")
+    lines = inputFileHandler.readlines()
+    abstruct(lines)
+    inputFileHandler.close()
+    printOutputFile()
     
         
 ##############################################################        
