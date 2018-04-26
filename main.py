@@ -13,15 +13,19 @@ from tkinter import *
 from pycorenlp import StanfordCoreNLP
 from nltk.tree import Tree
 import csv
+import pickle
 
 ####### Global Variable ########################
 outputFilenNo = 0
 typeofdialogue =[]
 classifier_statement = classifier_template = 0
+RHSClassifierModelName = 'rhsClassifierModel.sav'
+NPSDialogActClassifierModelName = 'NPSDialogActClassifierModel.sav'
 posts = nps_chat.xml_posts()[:]
 r = Rake()
 nerTagger = CoreNLPNERTagger(url='http://localhost:9000')
 stanfordQuestionClassifier = StanfordCoreNLP('http://localhost:9000')
+
 
 ######################################################
 
@@ -58,7 +62,7 @@ def train_npschat():
         featuresets += [(dialogue_act_features2(post.text), post.get('class'))]
     train_set = featuresets[:]
     classifier_statement = nltk.NaiveBayesClassifier.train(train_set)
-    #print(featuresets)
+    pickle.dump(classifier_statement, open(NPSDialogActClassifierModelName, 'wb'))
 
 #############################################
     
@@ -69,11 +73,11 @@ def train_template():
         keywordsToAbstractMap = csv.reader(keywordsToAbstractMappingFile, delimiter=',')
         for keywordsToAbstractEntry in keywordsToAbstractMap:
             for keyword in keywordsToAbstractEntry[0].split(';'):
-                #print(keywordsToAbstractEntry[0])
                 featuresets += [(dialogue_act_features3(keyword), keywordsToAbstractEntry[1])]
     train_set = featuresets[:]
     print(train_set)
     classifier_template = nltk.NaiveBayesClassifier.train(train_set)
+    pickle.dump(classifier_template, open(RHSClassifierModelName, 'wb'))
 
 #############################################
 
@@ -183,20 +187,26 @@ def printOutputFile():
                 
 def main():
     global outputFilenNo
-    
-    train_npschat()
-    
-    train_template()
+    global classifier_statement
+    global classifier_template
 
+    mode = 'eval'    
+    
+    if mode == 'train':
+        train_npschat()
+        train_template()
+    elif mode == 'eval':
+        with open(RHSClassifierModelName, 'rb') as f:
+            classifier_template = pickle.load(f)
+        with open(NPSDialogActClassifierModelName, 'rb') as g:
+            classifier_statement = pickle.load(g)
+    
     filesToProcess = [1]
 
     for fileno in filesToProcess:
         outputFilenNo = fileno
         ans = ""
-        #print(fileno)
-        
         inputFileHandler = open(str(fileno)+".txt", "r")
-        
         lines = inputFileHandler.readlines()
         abstruct(lines)
         inputFileHandler.close()
