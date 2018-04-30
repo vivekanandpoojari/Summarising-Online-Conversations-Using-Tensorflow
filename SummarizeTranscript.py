@@ -25,6 +25,9 @@ posts = nps_chat.xml_posts()[:]
 r = Rake()
 nerTagger = CoreNLPNERTagger(url='http://localhost:9000')
 stanfordQuestionClassifier = StanfordCoreNLP('http://localhost:9000')
+domainKeyWords = []
+lineScores = list()
+keywordsToAbstractDictionary = {}
 
 
 ######################################################
@@ -68,30 +71,60 @@ def train_npschat():
     
 def train_template():
     global classifier_template
+    global domainKeyWords
     featuresets = []
     with open('keywordsToAbstractMapping.csv') as keywordsToAbstractMappingFile:
         keywordsToAbstractMap = csv.reader(keywordsToAbstractMappingFile, delimiter=',')
         for keywordsToAbstractEntry in keywordsToAbstractMap:
             for keyword in keywordsToAbstractEntry[0].split(';'):
                 featuresets += [(dialogue_act_features3(keyword), keywordsToAbstractEntry[1])]
+                domainKeyWords += keyword
     train_set = featuresets[:]
-    print(train_set)
+    #print(train_set)
     classifier_template = nltk.NaiveBayesClassifier.train(train_set)
     pickle.dump(classifier_template, open(RHSClassifierModelName, 'wb'))
 
 #############################################
+    
+def populate_domain_keywords():
+    global domainKeyWords
+    global keywordsToAbstractDictionary
+
+    with open('keywordsToAbstractMapping.csv') as keywordsToAbstractMappingFile:
+        keywordsToAbstractMap = csv.reader(keywordsToAbstractMappingFile, delimiter=',')
+        for keywordsToAbstractEntry in keywordsToAbstractMap:
+            keywordsToAbstractDictionary[keywordsToAbstractEntry[0]] = keywordsToAbstractEntry[1]
+            for keyword in keywordsToAbstractEntry[0].split(';'):
+                #print(keyword)
+                domainKeyWords.append(keyword)
+    print(keywordsToAbstractDictionary)            
+
+#############################################
 
 def abstruct(allTheLines):
+    global lineScores
+
     outputFileHandler = open(str(outputFilenNo)+"_ouptput.txt", "w+")
+
+    outputFileHandler.write("\n=====================================\n")       
+    outputFileHandler.write("Abstract \n")   
+    outputFileHandler.write("=======================================\n")    
+
     lastSpeaker = lastStatementType = lastLine = ""
+    index = 0
 
     for eachLine in allTheLines:
+        index += 1
+        bFoundMatchingEntity = False
         statementlist = eachLine.split(':')
         statement = statementlist[-1].strip()
-        questionClassificationOutput = stanfordQuestionClassifier.annotate(statement, properties={'annotators': 'parse','outputFormat': 'json'})
+
+        # classify the statement as a whQuestion or ynQuestion
+        questionClassificationOutput = stanfordQuestionClassifier.annotate(statement, properties={'annotators': 'parse, sentiment','outputFormat': 'json'})
         questionClassificationTree = Tree.fromstring(questionClassificationOutput['sentences'][0]['parse'])
         questionClassificationTreeProductions = questionClassificationTree.productions()
         standfordQuestionClassification = ''
+        
 
         for questionClassificationTreeLevel in questionClassificationTreeProductions:
             if (str(questionClassificationTreeLevel.lhs()) == 'ROOT' and str(questionClassificationTreeLevel.rhs()[0]) == 'SBARQ'):
@@ -115,32 +148,37 @@ def abstruct(allTheLines):
         elif classifiedType == "Greet" or classifiedType == "System":
             continue
         elif classifiedType == "ynQuestion" or classifiedType == 'whQuestion':
+            classified_statement = mapInputTextToLHS(statement)   
+
+            if classifier_statement != '': 
+                outputFileHandler.write(classified_statement+" : ")
+                print('Input = ' + statement + ' , classified using templates as : ' + classified_statement)
+                print('I found a LHS which is : ' + classified_statement)
+
+            '''
+            print(dialogue_act_features2(statement))
             classified_statement = classifier_template.classify(dialogue_act_features2(statement))
-            classified_statementProb = classifier_template.prob_classify(dialogue_act_features2(statement))
-            outputFileHandler.write(classified_statement+" : ")
-            print('Input = ' + statement + ' , classified using templates as : ' + classified_statement)
-            print('I found a LHS which is : ' + classified_statement)
+            '''
         elif classifiedType == 'Statement' or classifiedType == 'Clarify' or classifiedType == 'Other':
             if lastStatementType == 'whQuestion':
                 outputFileHandler.write(statement+"\n")
                 print('I found a RHS which is : ' + statement)
-                continue
-
-            #Check for any entities to print     
-            entities = nerTagger.tag(statement.split())
-            bFoundMatchingEntity = False
-            for entity in entities:
-                if entity[1] == 'CITY' or entity[1] == 'DURATION' or entity[1] == 'NUMBER':
-                    bFoundMatchingEntity = True
-    
-            if bFoundMatchingEntity:
-                outputFileHandler.write("Notes : " + statement)
-                outputFileHandler.write("\n")
-                print('I found a note which is : ' + statement)
+            else:    
+                #Check for any entities to print     
+                entities = nerTagger.tag(statement.split())
 
                 for entity in entities:
-                    if entity[1] == 'CITY' or entity[1] == 'DURATION' or entity[1] == 'NUMBER':
-                        outputFileHandler.write(entity[1] + " : " + entity[0] + "\n")
+                    if entity[1] != 'O':
+                        bFoundMatchingEntity = True
+    
+                if bFoundMatchingEntity:
+                    outputFileHandler.write("Notes : " + statement)
+                    outputFileHandler.write("\n")
+                    print('I found a note which is : ' + statement)
+
+                for entity in entities:
+                    if entity[1] != 'O':
+                        #outputFileHandler.write(entity[1] + " : " + entity[0] + "\n")
                         print('I found a RHS which is : ' + entity[0])
                         bFoundMatchingEntity = True
             
@@ -152,13 +190,51 @@ def abstruct(allTheLines):
             print('Found no answer to ynQuestion')
             outputFileHandler.write('No'+"\n")
             print('I found a RHS which is : ' + statement)
-        else:
-            outputFileHandler.write(statement+"\n")
-            print('I found a RHS which is : ' + statement)
+
+        countOfDomainKeywords = 0    
+        for domainKeyword in domainKeyWords:
+            if statement.find(domainKeyword) == -1:
+                continue
+            else:
+                countOfDomainKeywords += 1
+
+        if bFoundMatchingEntity:
+            countOfDomainKeywords += 1        
+
+        lineScore = (statement, len(statement), questionClassificationOutput['sentences'][0]['sentimentValue'], countOfDomainKeywords, index)
+        lineScores.append(lineScore)
             
         lastSpeaker = statementlist[0]
         lastStatementType = classifiedType
         lastLine = statementlist[-1]
+
+    lineLengthArray = list(zip(*lineScores))[1]
+    sentimentArray = [ int(lineScore[2]) for lineScore in lineScores ]
+    keywordCountArray = list(zip(*lineScores))[3]
+
+    #lineScore = (statement, len(statement), questionClassificationOutput['sentences'][0]['sentimentValue'], countOfDomainKeywords, 0)   
+    print(lineScores)
+
+    lineScores2 = list()
+    for lineScore in lineScores:
+        lineLengthNormalized = (lineScore[1] - min(lineLengthArray)) / (max(lineLengthArray) - min(lineLengthArray))
+        sentimentNormalized = (int(lineScore[2]) - min(sentimentArray)) / (max(sentimentArray) - min(sentimentArray))
+        keywordCountNormalized = (lineScore[3] - min(keywordCountArray)) / (max(keywordCountArray) - min(keywordCountArray))
+        lineScore2 = (lineScore[0], round((0.70 * lineLengthNormalized + 0.15 * sentimentNormalized + 0.15 * keywordCountNormalized), 2), lineScore[4])
+        lineScores2.append(lineScore2)
+
+    outputFileHandler.write("\n=====================================\n")       
+    outputFileHandler.write("Summary\n")   
+    outputFileHandler.write("========================================\n")    
+
+    a = sorted(lineScores2, key=lambda x: x[1], reverse=True)    
+
+    b = sorted(a[:2], key=lambda x: x[2])    
+
+    for lineScore2 in b:
+        outputFileHandler.write(str(lineScore2[0]) + "\n")
+
+    outputFileHandler.close()
         
 
 ######################################################
@@ -181,7 +257,26 @@ def printOutputFile():
      b2.pack(side=RIGHT, padx=15, pady=15)
      mainloop()
      
-     
+
+######################################################
+               
+def mapInputTextToLHS(inputText):
+    global keywordsToAbstractDictionary
+    countOfMatchingKeyWords = 0
+    maxKeywordsFound = 0
+    LHS = ''
+    for key, value in keywordsToAbstractDictionary.items() :
+        countOfMatchingKeyWords = 0
+        for keyword in key.split(";"):
+            if inputText.find(keyword) != -1:
+                countOfMatchingKeyWords += 1
+                print('found matching keyword ' + keyword + ' , countOfMatchingKeyWords = ' + str(countOfMatchingKeyWords))
+
+        if countOfMatchingKeyWords > maxKeywordsFound:
+            maxKeywordsFound = countOfMatchingKeyWords
+            LHS = value        
+            print('found matching keyword ' + key + ' , countOfMatchingKeyWords = ' + str(countOfMatchingKeyWords) + ' , value = ' + value)
+    return LHS                 
 
 ######################################################
                 
@@ -189,10 +284,14 @@ def main():
     global outputFilenNo
     global classifier_statement
     global classifier_template
+    global lineScores
 
     fileno = "/Users/Sarnava/Data/hackathon/Hackathon_2018/transcript"
 
     mode = 'eval'    
+
+    populate_domain_keywords()
+    #print(domainKeyWords)
     
     if mode == 'train':
         train_npschat()
@@ -210,7 +309,9 @@ def main():
     lines = inputFileHandler.readlines()
     abstruct(lines)
     inputFileHandler.close()
-    printOutputFile()
+    printOutputFile()    
+
+
     
         
 ##############################################################        
