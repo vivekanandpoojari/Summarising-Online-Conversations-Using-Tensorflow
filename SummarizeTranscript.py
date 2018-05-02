@@ -92,7 +92,10 @@ def getInputFeatureVector(inputLines):
     x_test = list()
     
     for lineScore in lineScores:
-        lineLengthNormalized = round((lineScore[0] - min(lineLengthArray)) / (max(lineLengthArray) - min(lineLengthArray)), 3)
+        if (max(lineLengthArray) - min(lineLengthArray)) == 0:
+            lineLengthNormalized = 0
+        else:            
+            lineLengthNormalized = round((lineScore[0] - min(lineLengthArray)) / (max(lineLengthArray) - min(lineLengthArray)), 3)
 
         if (max(sentimentArray) - min(sentimentArray)) == 0:
             sentimentNormalized = 0
