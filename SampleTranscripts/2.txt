@@ -1,9 +1,0 @@
-A: How can I help you
-U: My mobile data is down.
-A: What is the connection type
-U: I have prepaid.
-A: When did you last recharge
-U: Not in the last 2 weeks.
-A: Your internet balance is low, 
-A: Kindly recharge to enjoy the internet.
-U: Thanks

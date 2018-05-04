@@ -1,7 +1,0 @@
-lan;cable;connected,LAN Connection Status
-modem;light;blinking,Modem working status
-restart;modem,Modem restarted
-wifi;working,Wifi working status
-help,Service Required
-ticket;id,Ticket ID
-registered;number,Mobile Number

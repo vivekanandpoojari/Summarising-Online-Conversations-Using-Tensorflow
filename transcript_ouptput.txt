@@ -1,0 +1,4 @@
+My wifi is not working.
+Could you please check if the modem lan cable is connected ?
+This looks like a problem at our end , I will need to raise a ticket with the backend team.
+I have raised a ticket for hardware malfunction and your ticket number in 12345

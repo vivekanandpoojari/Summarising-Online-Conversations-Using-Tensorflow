@@ -1,0 +1,15 @@
+17774441808@gsc.com : Hello 
+17774441807@gsc.com : Hi 
+17774441808@gsc.com : How can I help you ? 
+17774441807@gsc.com : My wifi is not working. 
+17774441808@gsc.com : Is the modem green light blinking ?  
+17774441807@gsc.com : Yes it is green. 
+17774441808@gsc.com : Did you restart the modem ? 
+17774441807@gsc.com : Yes 
+17774441808@gsc.com : Could you please check if the modem lan cable is connected ? 
+17774441807@gsc.com : Yes it is connected 
+17774441808@gsc.com : This looks like a problem at our end , I will need to raise a ticket with the backend team. 
+17774441807@gsc.com : Do you want me to raise a ticket ? 
+17774441807@gsc.com : Yes, please raise a ticket 
+17774441808@gsc.com : I have raised a ticket for hardware malfunction and your ticket number in 12345 
+17774441807@gsc.com : Thanks 
