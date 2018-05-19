@@ -17,6 +17,6 @@ We have two implementations one in tensorflow and one in scikit.
 Both take input in the form of a text file and output a text file.
 
 Contributors :
-Vivekanand
-Arjun
+Vivekanand,
+Arjun,
 Sarnava
